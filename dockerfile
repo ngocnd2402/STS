@@ -5,7 +5,7 @@ COPY requirements.txt /requirements.txt
 
 # Install dependencies
 RUN apt-get update
-RUN apt-get install python3-pyaudio -y
+RUN apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0  -y
 RUN pip install --no-cache-dir -r /requirements.txt
 
 

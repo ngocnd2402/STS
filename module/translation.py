@@ -3,7 +3,7 @@ from openai import OpenAI
 from io import BytesIO
 
 # Set OpenAI API key
-client = OpenAI(api_key='YOUR_KEY_HERE')
+client = OpenAI(api_key='YOUR_API_KEY')
 
 def transcrip_audio(audio_bytes):
     audio_file = BytesIO(audio_bytes)

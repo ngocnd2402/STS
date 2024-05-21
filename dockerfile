@@ -5,9 +5,9 @@ COPY requirements.txt /requirements.txt
 
 # Install dependencies
 RUN apt-get update
-RUN apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0  -y
+RUN apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev -y
+RUN apt-get install gcc -y
 RUN pip install --no-cache-dir -r /requirements.txt
-
 
 # Set working directory
 WORKDIR /app

@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  nexus-container:
-    container_name: draft-voice-trans
+  sts:
+    container_name: voice-trans
     build:
       context: .
       dockerfile: Dockerfile

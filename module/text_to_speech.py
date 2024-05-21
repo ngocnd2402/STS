@@ -3,7 +3,7 @@ from openai import OpenAI
 from io import BytesIO
 
 
-client = OpenAI(api_key='YOUR_KEY_HERE')
+client = OpenAI(api_key='YOUR_API_KEY')
 
 # def convert_text_to_speech(text):
 #     sound_file = BytesIO()

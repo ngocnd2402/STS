@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from module.audio_processing import record_audio
 from module.translation import transcrip_audio, transalte_to_eng, end2end_translation
 from module.text_to_speech import convert_text_to_speech
+import uvicorn
 
 app = FastAPI()
 
@@ -28,5 +29,4 @@ async def websocket_endpoint(websocket: WebSocket):
         await websocket.send_bytes(synthesized_audio)
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="localhost", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

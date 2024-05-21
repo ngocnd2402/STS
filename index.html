@@ -69,7 +69,7 @@
         }
 
         async function sendAudio(audioBlob) {
-            const ws = new WebSocket('ws://localhost:8000/ws');
+            const ws = new WebSocket('ws://0.0.0.0/ws');
 
             ws.onopen = () => {
                 ws.send(audioBlob);

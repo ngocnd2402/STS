@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Time Translation</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        audio {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real Time Translation</h1>
+    <button id="recordBtn">Start Recording</button>
+    <textarea id="transcript" readonly style="width: 300px; height: 150px;"></textarea>
+    <audio id="translatedAudio" controls></audio>
+
+    <script>
+        const recordBtn = document.getElementById('recordBtn');
+        const transcriptArea = document.getElementById('transcript');
+        const translatedAudio = document.getElementById('translatedAudio');
+
+        let mediaRecorder;
+        let audioChunks = [];
+
+        recordBtn.addEventListener('click', () => {
+            startRecording();
+        });
+
+        function startRecording() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.start();
+                    recordBtn.textContent = 'Recording...';
+
+                    mediaRecorder.addEventListener('dataavailable', event => {
+                        audioChunks.push(event.data);
+                    });
+
+                    mediaRecorder.addEventListener('stop', () => {
+                        const audioBlob = new Blob(audioChunks);
+                        sendAudio(audioBlob);
+                        audioChunks = [];
+                    });
+
+                    // Automatically stop recording when there's silence
+                    setTimeout(() => {
+                        if (mediaRecorder.state === 'recording') {
+                            mediaRecorder.stop();
+                            recordBtn.textContent = 'Start Recording';
+                        }
+                    }, 7500); // Adjust timeout as needed
+                });
+        }
+
+        async function sendAudio(audioBlob) {
+            const ws = new WebSocket('ws://localhost:8000/ws');
+
+            ws.onopen = () => {
+                ws.send(audioBlob);
+            };
+
+            ws.onmessage = (event) => {
+                if (event.data instanceof Blob) {
+                    const audioUrl = URL.createObjectURL(event.data);
+                    translatedAudio.src = audioUrl;
+                    translatedAudio.play();
+                } else {
+                    transcriptArea.value = event.data;
+                }
+            };
+        }
+
+        translatedAudio.addEventListener('ended', () => {
+            recordBtn.textContent = 'Start Recording';
+        });
+    </script>
+</body>
+</html>

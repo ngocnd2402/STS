@@ -5,7 +5,7 @@ COPY requirements.txt /requirements.txt
 
 # Install dependencies
 RUN apt-get update
-RUN apt-get install python3-pyaudio
+RUN apt-get install python3-pyaudio -y
 RUN pip install --no-cache-dir -r /requirements.txt
 
 

@@ -5,8 +5,8 @@ COPY requirements.txt /requirements.txt
 
 # Install dependencies
 RUN apt-get update
-RUN pip install --no-cache-dir -r /requirements.txt
 RUN apt-get install python3-pyaudio
+RUN pip install --no-cache-dir -r /requirements.txt
 
 
 # Set working directory

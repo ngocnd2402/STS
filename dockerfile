@@ -4,9 +4,9 @@ FROM python:3.9-slim
 COPY requirements.txt /requirements.txt
 
 # Install dependencies
-RUN sudo apt-get update
+RUN apt-get update
 RUN pip install --no-cache-dir -r /requirements.txt
-RUN sudo apt-get install python-pyaudio
+RUN apt-get install python-pyaudio
 
 
 # Set working directory

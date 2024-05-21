@@ -5,6 +5,7 @@ COPY requirements.txt /requirements.txt
 
 # Install dependencies
 RUN pip install --no-cache-dir -r /requirements.txt
+RUN pipwin install pyaudio
 
 # Set working directory
 WORKDIR /app
@@ -13,4 +14,4 @@ WORKDIR /app
 COPY . /app
 
 # Command to run the application
-CMD ["python", "app.py"]
+CMD ["python", "main.py"]

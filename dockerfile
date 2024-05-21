@@ -5,7 +5,8 @@ COPY requirements.txt /requirements.txt
 
 # Install dependencies
 RUN pip install --no-cache-dir -r /requirements.txt
-RUN pipwin install pyaudio
+RUN sudo apt-get install python-pyaudio
+
 
 # Set working directory
 WORKDIR /app
